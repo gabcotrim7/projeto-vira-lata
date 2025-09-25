@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -22,13 +23,14 @@ body {
 }
 
 .login-box {
-  background: rgba(31, 70, 33, 0.863);
+  background: rgba(209, 209, 209, 0.863);
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
   text-align: center;
+  font-family: "Lora", sans-serif;
 }
 
 .logo img {
@@ -51,7 +53,7 @@ h2 {
 
 label {
   font-size: 1rem;
-  color: #27dd64;
+  color: #2c6b2f;
   display: block;
   margin-bottom: 5px;
 }

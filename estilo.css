@@ -1,151 +1,322 @@
+/* =========================
+   RESET BASICO
+   ========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* =========================
+   BODY & BACKGROUND (fix de z-index)
+   ========================= */
 body {
   font-family: "Georgia", serif;
   color: #ffffff;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden; /* esconde só a barra horizontal */
-  overflow-y: auto;   /* ativa scroll vertical */
+  z-index: 0;                /* importante para garantir que ::before fique por trás */
+  overflow-x: hidden;        /* esconde só a barra horizontal */
+  overflow-y: auto;          /* ativa scroll vertical */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-
 
 /* Desfoque no background */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("https://raw.githubusercontent.com/gabcotrim7/projeto-vira-lata/main/assets/folhas-escuras-pixabay.webp") no-repeat center center fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: url("https://ciclovivo.com.br/wp-content/uploads/2021/03/folhas-escuras-pixabay.jpg") no-repeat center center fixed;
   background-size: cover;
   filter: blur(8px);
-  z-index: -1;
+  z-index: -1; /* fica atrás de tudo */
+  pointer-events: none;
 }
 
-
-/* Cabeçalho */
+/* =========================
+   CABEÇALHO / NAV
+   ========================= */
 .top-header {
-  background-color: rgba(14, 78, 43, 0.7);
-  padding: 20px 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(14, 78, 43, 0.75);
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* nav: layout flex flexível */
 nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* se você usou .nav-center (recomendado) ele centraliza corretamente */
+.nav-center {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 50px;
-  flex-wrap: wrap;
 }
 
-.nav-links {
+/* fallback: se NÃO houver .nav-center, a .nav-links também fica centralizada */
+nav .nav-links {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 28px;
+  align-items: center;
+  margin: 0 auto; /* tenta manter centralizados caso não haja .nav-center */
 }
 
-.nav-links a {
+/* links da nav */
+.nav-links a,
+.nav-links span {
   color: #fff;
   text-decoration: none;
   font-size: 1rem;
-  transition: color 0.3s ease;
+  transition: color 0.22s ease, transform 0.15s ease;
+  padding: 6px 6px;
+  border-radius: 6px;
 }
 
+/* hover */
 .nav-links a:hover {
   color: #aadbaa;
+  transform: translateY(-2px);
 }
 
-/* Ícone do usuário */
+/* estilo do item atual (span) */
+.nav-links .current {
+  color: #aadbaa;
+  font-weight: 700;
+  cursor: default;
+  background: rgba(255,255,255,0.03);
+}
+
+/* Ícone do usuário: sempre no lado direito sem quebrar o centramento */
+.user-icon {
+  margin-left: auto; /* empurra pro lado direito quando existir espaço */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .user-icon img {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: filter 0.25s ease, transform 0.15s ease;
 }
 
-/* Conteúdo principal */
-.welcome-section {
-  max-width: 800px;
-  margin: 100px auto;
-  padding: 40px;
-  border-radius: 10px;
-  text-align: center;
+.user-icon a:hover img {
+  filter: blur(0.8px);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   CONTEÚDO PRINCIPAL / CARDS
+   ========================= */
+.welcome-section,
+.about-section {
+  max-width: 1100px;
+  margin: 64px auto;
+  padding: 32px;
+  border-radius: 12px;
   color: #fff;
+  line-height: 1.7;
+  background: linear-gradient(135deg, rgba(14,78,43,0.55), rgba(8,56,31,0.45));
+  box-shadow: 0 8px 30px rgba(2,10,6,0.5);
 }
 
+/* títulos */
 .welcome-section h1 {
-  font-size: 3rem;
-  margin-bottom: 30px;
+  font-size: 2.6rem;
+  margin-bottom: 18px;
   font-weight: 600;
 }
 
-.welcome-section p {
-  font-size: 1.4rem;
-  line-height: 2;
-}
-.user-icon a img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  transition: filter 0.3s ease;
-}
-
-/* Aplica o desfoque ao passar o mouse */
-.user-icon a:hover img {
-  filter: blur(1px);
-}
-
-.about-section {
-  max-width: 900px;
-  margin: 100px auto;
-  padding: 50px;
-  background-color: rgba(14, 78, 43, 0.6); /* fundo translúcido */
-  border-radius: 15px;
-  text-align: center;
+.about-section h1,
+.about-section h2 {
   color: #fff;
-  line-height: 1.8;
 }
 
 .about-section h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  padding-bottom: 10px;
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .about-section h2 {
-  font-size: 1.8rem;
-  margin: 30px 0 15px;
+  font-size: 1.6rem;
+  margin-top: 22px;
 }
 
+/* listas */
 .about-section ul {
   list-style: none;
-  padding: 0;
-  margin-top: 20px;
-  text-align: left;
+  margin-top: 12px;
+  padding-left: 0;
 }
 
 .about-section ul li {
   margin: 10px 0;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
+  padding-left: 28px;
   position: relative;
-  padding-left: 25px;
 }
 
-/* marcador estilizado */
 .about-section ul li::before {
   content: "✔";
   position: absolute;
   left: 0;
+  top: 0;
   color: #aadbaa;
+  font-weight: 700;
 }
-.nav-links .current {
-  color: #aadbaa;
-  font-weight: bold;
-  cursor: default;
+
+/* =========================
+   GALERIA DE IMAGENS (GRID responsivo)
+   ========================= */
+.recycle-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 18px 0 26px;
+  align-items: stretch;
 }
+
+.recycle-images img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* títulos pequenos das seções de imagens */
+.about-section h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.15rem;
+  color: #eaf8ea;
+}
+
+/* =========================
+   VÍDEOS (responsivos)
+   ========================= */
+.recycle-videos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 18px 0 30px;
+}
+
+/* cada vídeo fica dentro de um wrapper com proporção 16:9 */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  background: rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* legenda/descrição pequena abaixo do vídeo */
+.video-caption {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #dff5d9;
+}
+
+/* =========================
+   LINKS EXTERNOS
+   ========================= */
+a[target="_blank"] {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* estilo dos links listados */
+.about-section ul a {
+  color: #eaf8ea;
+  transition: color 0.18s ease;
+}
+
+.about-section ul a:hover {
+  color: #ffffff;
+}
+
+/* =========================
+   PEQUENAS AJUSTES RESPONSIVOS
+   ========================= */
+@media (max-width: 900px) {
+  .welcome-section,
+  .about-section {
+    margin: 40px 18px;
+    padding: 20px;
+  }
+
+  .user-icon img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .nav-links {
+    gap: 16px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 640px) {
+  nav {
+    padding: 0 12px;
+  }
+
+  .nav-links {
+    gap: 12px;
+    font-size: 0.95rem;
+  }
+
+  /* empilha nav: links à esquerda e icone à direita (fallback) */
+  nav {
+    justify-content: space-between;
+  }
+
+  .nav-center {
+    order: 1;
+  }
+
+  .user-icon {
+    order: 2;
+    margin-left: 0;
+  }
+
+  .recycle-images img {
+    height: 150px;
+  }
+}
+
+/* =========================
+   UTILITÁRIOS (margens rápidas)
+   ========================= */
+.mt-12 { margin-top: 12px; }
+.mb-12 { margin-bottom: 12px; }
